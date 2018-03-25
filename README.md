@@ -9,4 +9,4 @@ O objetivo desse projeto foi criar uma API REST simples, um CRUD.
 - Thymeleaf
 
 ## Github
-Autor: [teste](https://github.com/douglasmiguel7)
+Conheça os outros projetos [aqui.](https://github.com/douglasmiguel7)
