@@ -1,6 +1,5 @@
 package br.com.douglas.biblioteca.domain;
 
-import br.com.douglas.biblioteca.input.LivroInput;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 

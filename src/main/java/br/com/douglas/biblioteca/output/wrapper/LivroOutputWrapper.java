@@ -1,6 +1,5 @@
 package br.com.douglas.biblioteca.output.wrapper;
 
-import br.com.douglas.biblioteca.domain.Livro;
 import br.com.douglas.biblioteca.output.LivroOutput;
 import com.fasterxml.jackson.annotation.JsonProperty;
 

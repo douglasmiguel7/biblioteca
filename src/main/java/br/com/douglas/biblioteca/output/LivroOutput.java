@@ -1,7 +1,5 @@
 package br.com.douglas.biblioteca.output;
 
-import br.com.douglas.biblioteca.domain.Livro;
-
 public class LivroOutput {
 
     private Long id;
