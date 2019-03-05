@@ -1,7 +1,7 @@
-package br.com.douglas.biblioteca.controller;
+package com.github.douglasmiguel7.biblioteca.livro.controller;
 
-import br.com.douglas.biblioteca.domain.Livro;
-import br.com.douglas.biblioteca.repository.LivroRepository;
+import com.github.douglasmiguel7.biblioteca.livro.domain.Livro;
+import com.github.douglasmiguel7.biblioteca.livro.repository.LivroRepository;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

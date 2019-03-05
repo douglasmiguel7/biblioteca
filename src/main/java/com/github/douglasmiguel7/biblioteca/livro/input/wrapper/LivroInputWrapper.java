@@ -1,7 +1,7 @@
-package br.com.douglas.biblioteca.input.wrapper;
+package com.github.douglasmiguel7.biblioteca.livro.input.wrapper;
 
-import br.com.douglas.biblioteca.input.LivroInput;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.douglasmiguel7.biblioteca.livro.input.LivroInput;
 
 public class LivroInputWrapper {
 

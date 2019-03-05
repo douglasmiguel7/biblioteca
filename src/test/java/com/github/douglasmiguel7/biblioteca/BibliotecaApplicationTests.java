@@ -1,4 +1,4 @@
-package br.com.douglas.biblioteca;
+package com.github.douglasmiguel7.biblioteca;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

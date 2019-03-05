@@ -1,7 +1,7 @@
-package br.com.douglas.biblioteca.output.wrapper;
+package com.github.douglasmiguel7.biblioteca.livro.output.wrapper;
 
-import br.com.douglas.biblioteca.output.LivroOutput;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.github.douglasmiguel7.biblioteca.livro.output.LivroOutput;
 
 public class LivroOutputWrapper {
 

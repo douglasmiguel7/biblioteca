@@ -1,4 +1,4 @@
-package br.com.douglas.biblioteca.input;
+package com.github.douglasmiguel7.biblioteca.livro.input;
 
 public class LivroInput {
 

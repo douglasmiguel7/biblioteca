@@ -1,4 +1,4 @@
-package br.com.douglas.biblioteca;
+package com.github.douglasmiguel7.biblioteca;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

@@ -1,4 +1,4 @@
-package br.com.douglas.biblioteca.output;
+package com.github.douglasmiguel7.biblioteca.livro.output;
 
 public class LivroOutput {
 

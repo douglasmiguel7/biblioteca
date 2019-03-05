@@ -1,16 +1,23 @@
-package br.com.douglas.biblioteca.api;
+package com.github.douglasmiguel7.biblioteca.livro.api;
 
-import br.com.douglas.biblioteca.domain.Livro;
-import br.com.douglas.biblioteca.input.LivroInput;
-import br.com.douglas.biblioteca.input.wrapper.LivroInputWrapper;
-import br.com.douglas.biblioteca.output.LivroOutput;
-import br.com.douglas.biblioteca.output.wrapper.LivroOutputWrapper;
-import br.com.douglas.biblioteca.output.wrapper.LivrosOutputWrapper;
-import br.com.douglas.biblioteca.repository.LivroRepository;
+import com.github.douglasmiguel7.biblioteca.livro.domain.Livro;
+import com.github.douglasmiguel7.biblioteca.livro.input.LivroInput;
+import com.github.douglasmiguel7.biblioteca.livro.input.wrapper.LivroInputWrapper;
+import com.github.douglasmiguel7.biblioteca.livro.output.LivroOutput;
+import com.github.douglasmiguel7.biblioteca.livro.output.wrapper.LivroOutputWrapper;
+import com.github.douglasmiguel7.biblioteca.livro.output.wrapper.LivrosOutputWrapper;
+import com.github.douglasmiguel7.biblioteca.livro.repository.LivroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
 import java.util.List;
