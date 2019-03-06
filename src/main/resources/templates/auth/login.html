@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Biblioteca</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+</head>
+
+<body>
+
+<div class="container justify-content-center">
+    <h1></h1>
+    <div class="row">
+        <div class="col-4">
+        </div>
+        <div class="col-4">
+            <h4>Login</h4>
+            <form th:action="@{/app/logar}" method="post">
+                <div class="form-group align-items-center">
+                    <label class="sr-only" for="inlineFormInputUsuario">Usuário</label>
+                    <input name="usuario" type="text" class="form-control" id="inlineFormInputUsuario" placeholder="Usuário" />
+                </div>
+                <div class="form-group align-items-center">
+                    <label class="sr-only" for="inlineFormUpdateInputSenha">Senha</label>
+                    <input name="senha" type="password" class="form-control" id="inlineFormUpdateInputSenha" placeholder="Senha">
+                </div>
+                <div class="form-group align-items-center">
+                    <button type="submit" class="btn btn-primary">Logar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

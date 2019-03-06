@@ -7,6 +7,7 @@ import com.github.douglasmiguel7.biblioteca.livro.output.LivroOutput;
 import com.github.douglasmiguel7.biblioteca.livro.output.wrapper.LivroOutputWrapper;
 import com.github.douglasmiguel7.biblioteca.livro.output.wrapper.LivrosOutputWrapper;
 import com.github.douglasmiguel7.biblioteca.livro.repository.LivroRepository;
+import com.github.douglasmiguel7.biblioteca.shared.api.ResourceV1API;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
@@ -24,13 +24,12 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/livros")
-public class LivroAPI {
+public class LivroAPI extends ResourceV1API {
 
     @Autowired
     private LivroRepository livroRepository;
 
-    @PostMapping
+    @PostMapping("/livros")
     public LivroOutputWrapper create(@RequestBody LivroInputWrapper livroInputWrapper) {
         LivroInput livroInput = livroInputWrapper.getLivroInput();
 
@@ -49,7 +48,7 @@ public class LivroAPI {
         return livroOutputWrapper;
     }
 
-    @GetMapping
+    @GetMapping("/livros")
     public LivrosOutputWrapper read() {
         List<LivroOutput> livroOutputs = new ArrayList<>();
 
@@ -72,7 +71,7 @@ public class LivroAPI {
         return livrosOutputWrapper;
     }
 
-    @PutMapping("{id}")
+    @PutMapping("/livros/{id}")
     public ResponseEntity update(@PathVariable Long id, @RequestBody LivroInputWrapper livroInputWrapper) {
         Optional<Livro> livroOptional = livroRepository.findById(id);
 
@@ -101,7 +100,7 @@ public class LivroAPI {
         return new ResponseEntity(livroOutputWrapper, HttpStatus.OK);
     }
 
-    @DeleteMapping("{id}")
+    @DeleteMapping("/livros/{id}")
     public ResponseEntity delete(@PathVariable Long id) {
         Optional<Livro> livroOptional = livroRepository.findById(id);
 

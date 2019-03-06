@@ -3,7 +3,7 @@
 \ \  __<   \ \ \  \ \  __<   \ \ \____  \ \ \  \ \ \/\ \  \/_/\ \/ \ \  __\   \ \ \____  \ \  __ \
  \ \_____\  \ \_\  \ \_____\  \ \_____\  \ \_\  \ \_____\    \ \_\  \ \_____\  \ \_____\  \ \_\ \_\
   \/_____/   \/_/   \/_____/   \/_____/   \/_/   \/_____/     \/_/   \/_____/   \/_____/   \/_/\/_/
-    API by douglasmiguel7                                :: Spring Boot ::        (v2.0.0.RELEASE)
+    by douglasmiguel7                                    :: Spring Boot ::        (v2.0.0.RELEASE)
 
 Repository : https://github.com/douglasmiguel7/biblioteca
 Github     : https://github.com/douglasmiguel7

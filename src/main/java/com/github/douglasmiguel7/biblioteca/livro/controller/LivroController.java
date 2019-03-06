@@ -1,115 +1,191 @@
 package com.github.douglasmiguel7.biblioteca.livro.controller;
 
+import com.github.douglasmiguel7.biblioteca.auth.service.AuthService;
 import com.github.douglasmiguel7.biblioteca.livro.domain.Livro;
+import com.github.douglasmiguel7.biblioteca.livro.exception.LivroIndisponivelException;
+import com.github.douglasmiguel7.biblioteca.livro.exception.LivroNaoAlugadoException;
 import com.github.douglasmiguel7.biblioteca.livro.repository.LivroRepository;
+import com.github.douglasmiguel7.biblioteca.livro.service.LivroService;
+import com.github.douglasmiguel7.biblioteca.shared.controller.WebAppController;
+import com.github.douglasmiguel7.biblioteca.usuario.domain.Usuario;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Controller
-@RequestMapping
-public class LivroController {
+public class LivroController extends WebAppController {
 
-    @Autowired
-    private LivroRepository livroRepository;
+	private LivroRepository livroRepository;
 
-    @RequestMapping
-    public String home(Model model) {
-        List<Livro> livros = livroRepository.findAll();
+	private LivroService livroService;
 
-        model.addAttribute("livros", livros);
+	private AuthService authService;
 
-        return "livros";
-    }
+	@Autowired
+	public LivroController(LivroRepository livroRepository, LivroService livroService, AuthService authService) {
+		this.livroRepository = livroRepository;
+		this.livroService = livroService;
+		this.authService = authService;
+	}
 
-    @PostMapping(params = "nome")
-    public String create(@RequestParam("nome") String nome) {
-        System.out.println("LivroController.create");
-        Livro livro = new Livro();
-        livro.setNome(nome);
+	@RequestMapping({"", "/", "/home"})
+	@PreAuthorize("hasAnyRole('ROLE_BOOK_CREATE', 'ROLE_BOOK_EDIT', 'ROLE_BOOK_SEARCH', 'ROLE_BOOK_DELETE', 'ROLE_BOOK_READ', 'ROLE_BOOK_RENT')")	public String home(Model model) {
+		List<Livro> livros = livroRepository.findAll();
 
-        livroRepository.save(livro);
+		model.addAttribute("livros", livros);
 
-        return "redirect:/";
-    }
+		return "livro/livros";
+	}
 
-    @GetMapping(params = "id")
-    public String read(Model model, @RequestParam("id") String id) {
-        System.out.println("LivroController.read");
-        if (!StringUtils.isNumeric(id)) {
-            return "livros";
-        }
+	@PreAuthorize("hasRole('ROLE_BOOK_CREATE')")
+	@PostMapping(value = "/book/create", params = "nome")
+	public String create(@RequestParam("nome") String nome) {
+		Livro livro = new Livro();
+		livro.setNome(nome);
 
-        Long livroId = Long.valueOf(id);
+		livroRepository.save(livro);
 
-        Optional<Livro> optionalLivro = livroRepository.findById(livroId);
+		return "redirect:/";
+	}
 
-        if (!optionalLivro.isPresent()) {
-            return "livros";
-        }
+	@PreAuthorize("hasRole('ROLE_BOOK_SEARCH')")
+	@GetMapping(value = "/book/search", params = "id")
+	public String read(Model model, @RequestParam("id") String id) {
+		if (!StringUtils.isNumeric(id)) {
+			return "livro/livros";
+		}
 
-        Livro livro = optionalLivro.get();
+		Long livroId = Long.valueOf(id);
 
-        List<Livro> livros = new ArrayList<>();
-        livros.add(livro);
+		Optional<Livro> optionalLivro = livroRepository.findById(livroId);
 
-        model.addAttribute("livros", livros);
+		if (!optionalLivro.isPresent()) {
+			return "livro/livros";
+		}
 
-        return "livros";
-    }
+		Livro livro = optionalLivro.get();
 
-    @PostMapping(params = {"id", "nome"})
-    public String update(@RequestParam("id") String id, @RequestParam("nome") String nome) {
-        System.out.println("LivroController.update");
-        if (!StringUtils.isNumeric(id)) {
-            return "redirect:/";
-        }
+		List<Livro> livros = new ArrayList<>();
+		livros.add(livro);
 
-        Long livroId = Long.valueOf(id);
+		model.addAttribute("livros", livros);
 
-        Optional<Livro> optionalLivro = livroRepository.findById(livroId);
+		return "livro/livros";
+	}
 
-        if (!optionalLivro.isPresent()) {
-            return "redirect:/";
-        }
+	@PreAuthorize("hasRole('ROLE_BOOK_EDIT')")
+	@PostMapping(value = "/book/update", params = {"id", "nome"})
+	public String update(@RequestParam("id") String id, @RequestParam("nome") String nome) {
+		if (!StringUtils.isNumeric(id)) {
+			return "redirect:/";
+		}
 
-        Livro livro = optionalLivro.get();
-        livro.setNome(nome);
+		Long livroId = Long.valueOf(id);
 
-        livroRepository.save(livro);
+		Optional<Livro> optionalLivro = livroRepository.findById(livroId);
 
-        return "redirect:/";
-    }
+		if (!optionalLivro.isPresent()) {
+			return "redirect:/";
+		}
 
-    @PostMapping(value = "delete", params = {"id"})
-    public String delete(@RequestParam("id") String id) {
-        System.out.println("LivroController.delete");
-        if (!StringUtils.isNumeric(id)) {
-            return "redirect:/";
-        }
+		Livro livro = optionalLivro.get();
+		livro.setNome(nome);
 
-        Long livroId = Long.valueOf(id);
+		livroRepository.save(livro);
 
-        Optional<Livro> optionalLivro = livroRepository.findById(livroId);
+		return "redirect:/";
+	}
 
-        if (!optionalLivro.isPresent()) {
-            return "redirect:/";
-        }
+	@PreAuthorize("hasAnyRole('ROLE_BOOK_DELETE')")
+	@PostMapping(value = "/book/delete", params = {"id"})
+	public String delete(@RequestParam("id") String id) {
+		if (!StringUtils.isNumeric(id)) {
+			return "redirect:/";
+		}
 
-        Livro livro = optionalLivro.get();
+		Long livroId = Long.valueOf(id);
 
-        livroRepository.delete(livro);
+		Optional<Livro> optionalLivro = livroRepository.findById(livroId);
 
-        return "redirect:/";
-    }
+		if (!optionalLivro.isPresent()) {
+			return "redirect:/";
+		}
+
+		Livro livro = optionalLivro.get();
+
+		livroRepository.delete(livro);
+
+		return "redirect:/";
+	}
+
+	@PreAuthorize("hasRole('ROLE_BOOK_RENT')")
+	@PostMapping(value = "/book/rent", params = "id")
+	public String rent(@RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+		if (!StringUtils.isNumeric(id)) {
+			return "redirect:/";
+		}
+
+		Long livroId = Long.valueOf(id);
+
+		Optional<Livro> optionalLivro = livroRepository.findById(livroId);
+
+		if (!optionalLivro.isPresent()) {
+			return "redirect:/";
+		}
+
+		Livro livro = optionalLivro.get();
+
+		Usuario usuario = authService.getUsuarioLogado();
+
+		try {
+			livroService.alugar(livro, usuario);
+		} catch (LivroIndisponivelException e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("message", StringUtils.join("Livro \"", livro.getNome(), "\" indisponível"));
+		}
+
+		return "redirect:/";
+	}
+
+	@PreAuthorize("hasRole('ROLE_BOOK_GIVEBACK')")
+	@PostMapping(value = "/book/give-back", params = "id")
+	public String giveBack(@RequestParam("id") String id, RedirectAttributes redirectAttributes) {
+		if (!StringUtils.isNumeric(id)) {
+			return "redirect:/";
+		}
+
+		Long livroId = Long.valueOf(id);
+
+		Optional<Livro> optionalLivro = livroRepository.findById(livroId);
+
+		if (!optionalLivro.isPresent()) {
+			return "redirect:/";
+		}
+
+		Livro livro = optionalLivro.get();
+
+		Usuario usuario = authService.getUsuarioLogado();
+
+		try {
+			livroService.devolver(livro, usuario);
+		} catch (LivroNaoAlugadoException e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("message", StringUtils.join("Livro \"", livro.getNome(), "\" indisponível"));
+		}
+
+		return "redirect:/";
+	}
 
 }

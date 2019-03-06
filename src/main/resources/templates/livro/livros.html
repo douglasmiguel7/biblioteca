@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<title>Biblioteca</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"/>
+</head>
+
+<body>
+
+<div class="container">
+	<h1>Biblioteca</h1>
+	<form action="/" th:action="@{/app/logout}" method="post">
+		<div class="form-group align-items-center">
+			<button type="submit" class="btn btn-sm btn-danger">Logout</button>
+		</div>
+	</form>
+	<div class="row">
+		<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_BOOK_CREATE')">
+			<div class="col">
+				<h3>Criar um novo livro</h3>
+				<form action="/" th:action="@{/app/book/create}" method="post">
+					<div class="form-group align-items-center">
+						<label class="sr-only" for="inlineFormCreateInputName">Nome</label>
+						<input th:name="nome" type="text" class="form-control" id="inlineFormCreateInputName" placeholder="Nome do livro" />
+					</div>
+					<div class="form-group align-items-center">
+						<button type="submit" class="btn btn-primary">Criar</button>
+					</div>
+				</form>
+			</div>
+		</th:block>
+
+		<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_BOOK_EDIT')">
+			<div class="col">
+				<h4>Editar um livro</h4>
+				<form action="/" th:action="@{/app/book/update}" method="post">
+					<div class="form-group align-items-center">
+						<label class="sr-only" for="inlineFormInputId">ID</label>
+						<input th:name="id" type="text" class="form-control" id="inlineFormInputId" placeholder="ID do livro" />
+					</div>
+					<div class="form-group align-items-center">
+						<label class="sr-only" for="inlineFormUpdateInputName">Nome</label>
+						<input th:name="nome" type="text" class="form-control" id="inlineFormUpdateInputName" placeholder="Novo nome do livro">
+					</div>
+					<div class="form-group align-items-center">
+						<button type="submit" class="btn btn-primary">Atualizar</button>
+					</div>
+				</form>
+			</div>
+		</th:block>
+
+		<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_BOOK_SEARCH')">
+			<div class="col">
+				<h4>Buscar um livro</h4>
+				<form action="/" th:action="@{/app/book/search}" method="get">
+					<div class="form-group align-items-center">
+						<label class="sr-only" for="inlineFormSearchInputId">ID</label>
+						<input th:name="id" type="text" class="form-control" id="inlineFormSearchInputId" placeholder="ID do livro">
+					</div>
+					<div class="form-group align-items-center">
+						<button type="submit" class="btn btn-primary">Buscar</button>
+					</div>
+				</form>
+			</div>
+		</th:block>
+
+		<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_BOOK_DELETE')">
+			<div class="col">
+				<h4>Excluir um livro</h4>
+				<form action="/" th:action="@{/app/book/delete}" method="post">
+					<div class="form-group align-items-center">
+						<label class="sr-only" for="inlineFormDeleteInputId">ID</label>
+						<input th:name="id" type="text" class="form-control" id="inlineFormDeleteInputId" placeholder="ID do livro">
+					</div>
+					<div class="form-group align-items-center">
+						<button type="submit" class="btn btn-primary">Excluir</button>
+					</div>
+				</form>
+			</div>
+		</th:block>
+		<div class="w-100">
+			<br/>
+		</div>
+
+		<th:block sec:authorize="hasAnyRole('ROLE_ADMIN', 'ROLE_BOOK_READ')">
+			<div class="col">
+				<table class="table">
+					<thead class="thead-dark">
+						<tr>
+							<th scope="col">ID</th>
+							<th scope="col">Nome</th>
+							<th:block sec:authorize="hasAnyRole('ROLE_BOOK_RENT', 'ROLE_BOOK_GIVEBACK')">
+								<th scope="col"></th>
+							</th:block>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="livro : ${livros}">
+							<th scope="row" th:text="${livro.id}">1</th>
+							<td th:text="${livro.nome}">Um livro cadastrado</td>
+							<td>
+								<th:block th:if="${#bools.isTrue(@livros.alugadoPorUsuario(livro, @authService.getUsuarioLogado()))}">
+									Você alugou
+								</th:block>
+								<th:block sec:authorize="hasAnyRole('ROLE_BOOK_RENT')">
+									<th:block th:if="${#bools.isFalse(@livros.alugado(livro))}">
+										<form action="/" th:action="@{/app/book/rent}" method="post">
+											<input type="hidden" name="id" th:value="${livro.id}">
+											<div class="form-group align-items-center">
+												<button type="submit" class="btn btn-sm btn-success">Alugar</button>
+											</div>
+										</form>
+									</th:block>
+								</th:block>
+								<th:block sec:authorize="hasAnyRole('ROLE_BOOK_GIVEBACK')">
+									<th:block th:if="${#bools.isTrue(@livros.alugado(livro))}">
+										<form action="/" th:action="@{/app/book/give-back}" method="post">
+											<input type="hidden" name="id" th:value="${livro.id}">
+											<div class="form-group align-items-center">
+												<button type="submit" class="btn btn-sm btn-warning">Devolvido</button>
+											</div>
+										</form>
+									</th:block>
+								</th:block>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</th:block>
+	</div>
+</div>
+
+</body>
+
+</html>
