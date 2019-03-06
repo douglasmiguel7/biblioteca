@@ -10,14 +10,14 @@ O objetivo desse projeto foi criar uma API REST simples, e um formulario [CRUD][
 Pronto! 
 
 # Acessos
-username: admin
-password: admin
+username: admin  
+password: admin  
+  
+username: estudante  
+passoword: 456  
 
-username: estudante
-passoword: 456
-
-username: bibliotecario
-password: 123
+username: bibliotecario  
+password: 123  
 
 # Foi utilizado para desenvolvimento
 - [SpringBoot][springboot]
