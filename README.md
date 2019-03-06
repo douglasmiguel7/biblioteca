@@ -1,5 +1,5 @@
 # Objetivo
-O objetivo desse projeto foi criar uma API REST simples, um [CRUD][crud].
+O objetivo desse projeto foi criar uma API REST simples, e um formulario [CRUD][crud].
 
 # Quero testar
 1. Instale o [Maven][maven]. 
@@ -7,7 +7,17 @@ O objetivo desse projeto foi criar uma API REST simples, um [CRUD][crud].
 3. Abra o terminal na raiz do projeto.
 4. Execute o comando `mvn spring-boot:run`
 
-Pronto! Agora você pode realizar as requisições na API, não esqueça de consultar a [documentação][documentacao].
+Pronto! 
+
+# Acessos
+username: admin
+password: admin
+
+username: estudante
+passoword: 456
+
+username: bibliotecario
+password: 123
 
 # Foi utilizado para desenvolvimento
 - [SpringBoot][springboot]
