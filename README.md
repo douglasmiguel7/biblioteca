@@ -19,7 +19,7 @@ A simple project to implement library services with [REST][rest].
 3. Run on terminal with `mvn spring-boot:run`
 
 ## Docker
-Comingo soon...
+Coming soon...
 
 Enjoy! Don't forget, see API [docs][docs].
 
