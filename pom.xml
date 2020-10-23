@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>br.com.douglasmiguel7</groupId>
-	<artifactId>biblioteca</artifactId>
+	<artifactId>bookflix</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>biblioteca</name>
-	<description>Demo project for Spring Boot</description>
+	<name>bookflix</name>
+	<description>A simple project to implement library services with REST</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
